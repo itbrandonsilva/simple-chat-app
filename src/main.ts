@@ -39,7 +39,7 @@ io.on('connection', (socket: Socket) => {
 
 app.get('/search/:search', (req, res) => {
     let search = req.params.search;
-    axios.get(`https://api.giphy.com/v1/gifs/search?api_key=eCbYNG9wl6MyHkDLxQRbHxlnBp4S6Hm9&q=${search}&limit=10`)
+    axios.get(`https://api.giphy.com/v1/gifs/search?api_key=eCbYNG9wl6MyHkDLxQRbHxlnBp4S6Hm9&q=${search}&limit=20`)
         .then(giphy => {
             //giphy.data.data.map((entry: any) => entry.bitly_gif_url));
             let data = giphy.data.data.map((entry: any) => entry.images.original.url);
