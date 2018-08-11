@@ -29,7 +29,7 @@ io.on('connection', (socket: Socket) => {
     });
 
     socket.on('send-msg', (msg) => {
-        lobby.emit('msg', msg);
+        lobby.emit('msg', {id: (socket as any)._customId || socket.id, msg});
     });
 
     socket.on('disconnect', (socket) => {
