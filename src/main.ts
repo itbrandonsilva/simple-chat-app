@@ -36,7 +36,7 @@ io.on('connection', (socket: Socket) => {
     });
 });
 
-app.get('/search', (req, res) => {
+app.get('/search/:search', (req, res) => {
     let search = req.params.search;
     axios.get(`https://api.giphy.com/v1/gifs/search?api_key=eCbYNG9wl6MyHkDLxQRbHxlnBp4S6Hm9&q=${search}&limit=10`)
         .then(giphy => {
