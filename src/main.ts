@@ -28,7 +28,7 @@ io.on('connection', (socket: Socket) => {
     });
 
     socket.on('msg', (msg) => {
-        socket.to('lobby').emit(msg);
+        socket.to('lobby').emit('msg', msg);
     });
 
     socket.on('disconnect', (socket) => {
