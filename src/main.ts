@@ -10,17 +10,9 @@ const io = require("socket.io")(server);
 
 app.use(cors());
 
-function leaveChat(socket: Socket) {
-    Object.keys(socket.rooms).forEach(room => {
-        if (room !== 'lobby') socket.leave(room);
-    });
-}
-
 function broadcastLobby() {
     const lobby = io.of('/');
-    console.log('brawcast lahby');
     io.of('/').in('lobby').clients((err: any, clients: any) => {
-    //let clients = io.sockets.clients.room('lobby');
         console.log(clients);
         lobby.emit('users', clients);
     });
@@ -35,16 +27,6 @@ io.on('connection', (socket: Socket) => {
         broadcastLobby();
     });
 
-    /*socket.on('join', (room) => {
-        console.log(room);
-        leaveChat(socket);
-        socket.join(room);
-    });*/
-
-    /*socket.on('leave', () => {
-        leaveChat(socket);
-    });*/
-
     socket.on('msg', (msg) => {
         socket.to('lobby').emit(msg);
     });
@@ -53,7 +35,6 @@ io.on('connection', (socket: Socket) => {
         broadcastLobby();
     });
 });
-
 
 app.get('/search', (req, res) => {
     let search = req.params.search;
