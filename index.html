@@ -1,0 +1,7 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script>
+  const socket = io('localhost:3000');
+  socket.on('users', users => {
+      console.log(users);
+  });
+</script>
