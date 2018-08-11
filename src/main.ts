@@ -45,7 +45,8 @@ app.get('/search/:search', (req, res) => {
             let data = giphy.data.data.map((entry: any) => entry.images.original.url);
             res.json(data);
         }).catch(err => {
-            throw err;
+            console.error(err);
+            res.json([]);
         })
 });
 
