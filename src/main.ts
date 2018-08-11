@@ -10,11 +10,12 @@ const io = require("socket.io")(server);
 
 app.use(cors());
 
+const lobby = io.of('/').in('lobby');
+
 function broadcastLobby() {
-    const lobby = io.of('/');
     io.of('/').in('lobby').clients((err: any, clients: any) => {
-        console.log(clients);
-        lobby.emit('users', clients);
+        let names = clients.map((client: string) => (io.sockets.connected[client] as any)._customId || client);
+        lobby.emit('users', names);
     });
 }
 
@@ -23,12 +24,12 @@ io.on('connection', (socket: Socket) => {
     broadcastLobby();
 
     socket.on('id', (id) => {
-        socket.id = id;
+        (socket as any)._customId = id;
         broadcastLobby();
     });
 
-    socket.on('msg', (msg) => {
-        socket.to('lobby').emit('msg', msg);
+    socket.on('send-msg', (msg) => {
+        lobby.emit('msg', msg);
     });
 
     socket.on('disconnect', (socket) => {
